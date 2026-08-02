@@ -7,6 +7,9 @@
 
 DEVICE_PATH := device/infinix/X6885
 
+# Allow missing dependencies (Required for TWRP Minimal Manifest)
+ALLOW_MISSING_DEPENDENCIES := true
+
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
