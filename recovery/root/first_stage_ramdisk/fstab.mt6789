@@ -1,0 +1,10 @@
+# MediaTek MT6789 fstab for XOS 16 (Infinix X6885)
+system /system erofs ro wait,slotselect,avb=vbmeta_system,logical,first_stage_mount
+vendor /vendor erofs ro wait,slotselect,avb=vbmeta_vendor,logical,first_stage_mount
+product /product erofs ro wait,slotselect,avb=vbmeta_system,logical,first_stage_mount
+system_ext /system_ext erofs ro wait,slotselect,avb=vbmeta_system,logical,first_stage_mount
+vendor_dlkm /vendor_dlkm erofs ro wait,slotselect,avb=vbmeta_vendor,logical,first_stage_mount
+odm_dlkm /odm_dlkm erofs ro wait,slotselect,avb=vbmeta_vendor,logical,first_stage_mount
+
+/dev/block/by-name/userdata /data f2fs noatime,nosuid,nodev wait,check,quota,formattable,fileencryption=aes-256-xts:aes-256-cts:v2+inlinecrypt_optimized,keydirectory=/metadata/vold/metadata_encryption,reservedsize=128M
+/dev/block/by-name/metadata /metadata ext4 noatime,nosuid,nodev wait,check,formattable,first_stage_mount
