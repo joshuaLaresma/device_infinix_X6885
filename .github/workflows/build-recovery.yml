@@ -1,0 +1,52 @@
+name: Build TWRP / OrangeFox Recovery for XOS 16
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Recovery Image
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Device Tree
+        uses: actions/checkout@v4
+        with:
+          path: device/infinix/X6885
+
+      - name: Setup Build Environment
+        run: |
+          sudo apt update
+          sudo apt install -y git-core gnupg flex bison build-essential zip curl zlib1g-dev \
+            libc6-dev-i386 x11proto-core-dev libx11-dev libgl1-mesa-dev libxml2-utils \
+            xsltproc unzip fontconfig liblz4-tool ccache
+
+      - name: Install Repo Tool
+        run: |
+          mkdir -p ~/bin
+          curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
+          chmod a+x ~/bin/repo
+          echo "$HOME/bin" >> $GITHUB_PATH
+
+      - name: Initialize TWRP Source
+        run: |
+          mkdir twrp && cd twrp
+          repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1 --depth=1
+          repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
+
+      - name: Move Device Tree to Build Folder
+        run: |
+          mkdir -p twrp/device/infinix/
+          mv device/infinix/X6885 twrp/device/infinix/
+
+      - name: Build Recovery Image
+        run: |
+          cd twrp
+          source build/envsetup.sh
+          lunch twrp_X6885-userdebug
+          mka recoveryimage -j$(nproc --all)
+
+      - name: Upload Recovery Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TWRP-XOS16-X6885-Recovery
+          path: twrp/out/target/product/X6885/recovery.img
