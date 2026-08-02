@@ -1,0 +1,97 @@
+#
+# Copyright (C) 2026 The Android Open Source Project
+# Copyright (C) 2026 TeamWin / OrangeFox Recovery Project
+#
+# Device Configuration for Infinix HOT 60 Pro / 50 Pro (X6885 - XOS 16 / Android 15/16 Base)
+#
+
+DEVICE_PATH := device/infinix/X6885
+
+# Architecture
+TARGET_ARCH := arm64
+TARGET_ARCH_VARIANT := armv8-a
+TARGET_CPU_ABI := arm64-v8a
+TARGET_CPU_ABI2 :=
+TARGET_CPU_VARIANT := generic
+TARGET_CPU_VARIANT_RUNTIME := generic
+
+TARGET_2ND_ARCH := arm
+TARGET_2ND_ARCH_VARIANT := armv7-a-neon
+TARGET_2ND_CPU_ABI := armeabi-v7a
+TARGET_2ND_CPU_ABI2 := armeabi
+TARGET_2ND_CPU_VARIANT := generic
+TARGET_2ND_CPU_VARIANT_RUNTIME := generic
+
+# Assert
+TARGET_OTA_ASSERT_DEVICE := X6885,Infinix-X6885,HOT60Pro
+
+# Bootloader / Platform Target
+TARGET_BOOTLOADER_BOARD_NAME := mt6789
+TARGET_BOARD_PLATFORM := mt6789
+TARGET_NO_BOOTLOADER := true
+TARGET_USES_UEFI := true
+
+# Kernel & Boot Image Header v4 (XOS 16)
+BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 bootconfig
+BOARD_KERNEL_BASE := 0x40000000
+BOARD_KERNEL_PAGESIZE := 4096
+BOARD_RAMDISK_OFFSET := 0x00000000
+BOARD_KERNEL_TAGS_OFFSET := 0x00000100
+BOARD_MKBOOTIMG_ARGS += --header_version 4
+
+# Dynamic Partitions (XOS 16 Dynamic Super Layout)
+BOARD_FLASH_BLOCK_SIZE := 262144
+BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
+BOARD_VENDOR_BOOTIMAGE_PARTITION_SIZE := 67108864
+BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE := 8388608
+BOARD_DTBOIMG_PARTITION_SIZE := 8388608
+
+BOARD_SUPER_PARTITION_SIZE := 9663676416
+BOARD_SUPER_PARTITION_GROUPS := infinix_dynamic_partitions
+BOARD_INFINIX_DYNAMIC_PARTITIONS_SIZE := 9659482112
+BOARD_INFINIX_DYNAMIC_PARTITIONS_PARTITION_LIST := \
+    system \
+    vendor \
+    product \
+    system_ext \
+    vendor_dlkm \
+    odm_dlkm \
+    tr_carrier \
+    tr_company \
+    tr_mi \
+    tr_overlayfs \
+    tr_preload \
+    tr_product \
+    tr_region \
+    tr_theme
+
+# Filesystem Types (XOS 16 EROFS Support)
+BOARD_EROFS_ENABLE := true
+TARGET_USERIMAGES_USE_EROFS := true
+BOARD_EROFS_COMPRESSOR := lz4hc,9
+TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_USE_F2FS := true
+BOARD_HAS_LARGE_FILESYSTEM := true
+
+# Android Verified Boot (AVB 2.0)
+BOARD_AVB_ENABLE := true
+BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
+BOARD_AVB_VBMETA_SYSTEM := system vendor product system_ext
+BOARD_AVB_VBMETA_SYSTEM_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
+BOARD_AVB_VBMETA_SYSTEM_ALGORITHM := SHA256_RSA2048
+BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := 1
+BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 1
+
+# Recovery / TWRP / OrangeFox Flags
+TW_THEME := portrait_hdpi
+TW_EXTRA_LANGUAGES := true
+TW_SCREEN_BLANK_ON_BOOT := true
+TW_INPUT_BLACKLIST := "hbtp"
+TW_USE_TOOLBOX := true
+TW_INCLUDE_REPACKTOOLS := true
+TW_INCLUDE_LPDUMP := true
+TW_HAS_EDL_MODE := false
+TW_EXCLUDE_APEX := true
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_FUSE_EXFAT := true
+TW_INCLUDE_NTFS_3G := true

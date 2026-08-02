@@ -1,0 +1,30 @@
+# Android fstab file for Infinix HOT 60 Pro / 50 Pro (X6885 - XOS 16 EROFS Base)
+# <src>                                 <mnt_point>     <type>  <mnt_flags and options> <fs_mgr_flags>
+
+# Dynamic Logical Partitions (EROFS for XOS 16 / EXT4 Fallback)
+system                                  /system         erofs   ro                      logical,first_stage_mount
+vendor                                  /vendor         erofs   ro                      logical,first_stage_mount
+product                                 /product        erofs   ro                      logical,first_stage_mount
+system_ext                              /system_ext     erofs   ro                      logical,first_stage_mount
+vendor_dlkm                             /vendor_dlkm    erofs   ro                      logical,first_stage_mount
+odm_dlkm                                /odm_dlkm       erofs   ro                      logical,first_stage_mount
+
+# Physical Core Boot Partitions
+/dev/block/by-name/boot                 /boot           emmc    defaults                slotselect
+/dev/block/by-name/vendor_boot          /vendor_boot    emmc    defaults                slotselect
+/dev/block/by-name/init_boot            /init_boot      emmc    defaults                slotselect
+/dev/block/by-name/dtbo                 /dtbo           emmc    defaults                slotselect
+/dev/block/by-name/vbmeta               /vbmeta         emmc    defaults                slotselect
+/dev/block/by-name/vbmeta_system        /vbmeta_system  emmc    defaults                slotselect
+/dev/block/by-name/vbmeta_vendor        /vbmeta_vendor  emmc    defaults                slotselect
+
+# Storage & Userdata
+/dev/block/by-name/userdata             /data           f2fs    noatime,nosuid,nodev    wait,check,quota,formattable,reservedsize=128M
+/dev/block/by-name/metadata             /metadata       ext4    noatime,nosuid,nodev    wait,check,formattable
+/dev/block/by-name/persist              /mnt/vendor/persist ext4 noatime,nosuid,nodev  wait,check
+/dev/block/by-name/nvram                /nvram          emmc    defaults                defaults
+/dev/block/by-name/nvdata               /nvdata         ext4    noatime,nosuid,nodev    wait,check
+
+# External Media
+/dev/block/mmcblk0p1                    /sdcard         vfat    defaults                recoveryonly
+/dev/block/sdb1                         /usb_otg        vfat    defaults                recoveryonly
