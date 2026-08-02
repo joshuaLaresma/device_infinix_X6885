@@ -51,15 +51,7 @@ BOARD_INFINIX_DYNAMIC_PARTITIONS_PARTITION_LIST := \
     product \
     system_ext \
     vendor_dlkm \
-    odm_dlkm \
-    tr_carrier \
-    tr_company \
-    tr_mi \
-    tr_overlayfs \
-    tr_preload \
-    tr_product \
-    tr_region \
-    tr_theme
+    odm_dlkm
 
 # Filesystem Types (XOS 16 EROFS Support)
 BOARD_EROFS_ENABLE := true
