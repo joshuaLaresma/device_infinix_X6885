@@ -17,6 +17,3 @@ PRODUCT_PACKAGES += \
 
 # Languages
 PRODUCT_LOCALES := en_US
-
-# API Level (Android 15 / XOS 16 base)
-PRODUCT_SHIPPING_API_LEVEL := 35
