@@ -41,6 +41,7 @@ jobs:
       - name: Build Recovery Image
         run: |
           cd twrp
+          export ALLOW_MISSING_DEPENDENCIES=true
           source build/envsetup.sh
           lunch twrp_X6885-userdebug
           mka recoveryimage -j$(nproc --all)
