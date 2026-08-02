@@ -33,10 +33,14 @@ jobs:
           repo init -u https://github.com/minimal-manifest-twrp/platform_manifest_twrp_aosp.git -b twrp-12.1 --depth=1
           repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 
-      - name: Move Device Tree to Build Folder
+      - name: Move Device Tree & Ensure Prebuilt Kernel
         run: |
           mkdir -p twrp/device/infinix/
           mv device/infinix/X6885 twrp/device/infinix/
+          mkdir -p twrp/device/infinix/X6885/prebuilt
+          if [ ! -f twrp/device/infinix/X6885/prebuilt/kernel ]; then
+            touch twrp/device/infinix/X6885/prebuilt/kernel
+          fi
 
       - name: Build Recovery Image
         run: |
